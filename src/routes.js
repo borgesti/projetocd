@@ -1,6 +1,5 @@
-import ListarNota from './components/ListarNota.vue'
-import HomePage from './components/HomePage.vue'
-
+import ListarNota         from './components/ListarNota.vue'
+import HomePage           from './components/HomePage.vue'
 import ListarNotaProcesso from '@/pages/Nota/ListarNotaProcesso.vue'
 
     

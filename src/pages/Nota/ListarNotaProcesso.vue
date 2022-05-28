@@ -25,7 +25,6 @@
             </div>
             
 
-
             <div class="panel panel-default">
                 <div class="panel-body">
                              
@@ -48,13 +47,7 @@
                     <h2>Lista de Notas</h2>
                 </div>                    
                 <div class="btnIncluirNota">
-                    <button 
-                        type="button"
-                        class="btn btn-secondary" 
-                       
-                        data-toggle="modal" 
-                        @click="abrirModalIncluirNota()"                                
-                    >Incluir Nota</button>          
+                    <b-button id="show-btn" @click="abrirModalIncluirNota()">Incluir Nota</b-button>              
                 </div>                
             </div>               
 
@@ -74,7 +67,6 @@
                         </thead>
 
                         <tbody>
-
                             <ItemListarNotaProcesso
                                 v-for="nota in listaDeNotas"
                                 :key="nota.index"
@@ -112,88 +104,121 @@
         </div>    
     </div>
     
-    
+
+
+
+
+
     <!-- ###################### Modal ################### -->
 
-    <div class="modal fade" id="modalIncluirNota" tabindex="-1" role="dialog" aria-labelledby="modalIncluirNota"  aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Incluir Nota</h4>
-                </div>
 
-                <div class="modal-body">
-                    <form>
-                        <div class="mb-3">
-                            <label for="descricaoNota" class="col-form-label">Nota:</label>
-                            <textarea 
-                                v-model="nota.desNota"
-                                id="descricaoNota"
-                                class="form-control"                                
-                            >
-                            </textarea>
-                        </div>
-                    </form>
-                </div>
-
-                <div class="modal-footer">
-                    <button 
-                        class="btn btn-primary" 
-                        type="submit"
-                        @click="confirmarInclusaoNota()"
-                        >Incluir
-                    </button>   
-
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-
-                </div>
-
-            </div>
+    <!-- Modal Bootstrap VUE Incluir Nota -->
+    <b-modal 
+        id="bv-modal-incluirNota" 
+        size="lg" 
+        hide-footer
+        title="Incluir Nota"
+        @show="resetModal"
+        @hidden="resetModal"
+        @ok="handleOk"
+    >
+        <div class="d-block text-center">
+            <h3></h3>
         </div>
-    </div>     
 
+        <form ref="form" @submit.stop.prevent="handleSubmit">
+            <b-form-group
+            label="Nota"
+            label-for="nota-input"
+            invalid-feedback="A nota é de preenchimento obrigatório!"
+            :state="nameState"
+            >
+                <b-form-textarea
+                id="descricaoNota"
+                v-model="nota.desNota"
+                placeholder="Descrição da nota..."
+                rows="5"
+                max-rows="10"
+                required
+                :state="nameState"
+                ></b-form-textarea>                             
+            </b-form-group>
+        </form>
+        
+        <div class="espacoBtn">
+            <button 
+                class="btn btn-primary " 
+                type="submit"
+                @click="confirmarInclusaoNota()"
+                >Incluir
+            </button>
 
-
-    <div class="modal fade" id="modalConfirmarExclusaoNota" tabindex="-1" role="dialog" aria-labelledby="modalConfirmarExclusaoNota"  aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Excluir Nota</h4>
-                </div>
-
-                <div class="modal-body">
-                    <form>
-                        <p class="texto-info">
-                            <strong class="info-titulo">Atenção!</strong>
-                            Tem certeza que deseja excluir a Nota do Processo?
-                        </p>
-                    </form>
-                </div>
-
-                <div class="modal-footer">
-                    <button 
-                        class="btn btn-primary" 
-                        type="submit"
-                        @click="confirmarExclusaoNota(nota.id)"
-                        >Excluir
-                    </button>   
-
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-
-                </div>
-
-            </div>
+            <b-button 
+                class="btn btn-secondary btn-cancelar" 
+                block 
+                @click="$bvModal.hide('bv-modal-incluirNota')"
+            >Cancelar
+            </b-button>
         </div>
-    </div>     
+
+    </b-modal>
+
+
+
+ 
+    <!-- Modal Bootstrap VUE Excluir Nota -->
+    <b-modal 
+        id="bv-modal-excluirNota" 
+        size="sm" 
+        hide-footer
+        title="Excluir Nota"
+
+    >
+        <div class="d-block text-center">
+            <h3></h3>
+        </div>
+
+        <div class="d-block text-center">
+            <h3>Atenção!</h3>
+        </div>
+        
+        <div>
+            <p class="texto-info">            
+                Tem certeza que deseja excluir a Nota do Processo?
+            </p>
+        
+        </div>
+
+        <div class="espacoBtn">
+
+            <button 
+                class="btn btn-primary" 
+                type="submit"
+                @click="confirmarExclusaoNota(nota.id)"
+                >Excluir
+            </button>
+            
+            
+            <b-button 
+                class="btn btn-secondary btn-cancelar" 
+                block 
+                @click="$bvModal.hide('bv-modal-excluirNota')"
+            >
+                Cancelar
+            </b-button>
+        </div>
+
+    </b-modal>
+
+ 
  
 
 
-    <!-- Fim da Modal Nota -->
+  
 
 
-    
+
+
   </div>
 </template>
 
@@ -325,7 +350,8 @@
             }, 
 
             abrirModalIncluirNota() {
-                $('#modalIncluirNota').modal('show')
+                this.nota = {};    
+                this.$bvModal.show('bv-modal-incluirNota')
                 
             },
 
@@ -350,7 +376,8 @@
 
                     })
                     .finally(                         
-                         this.fecharModalIncluirNota() 
+                        this.$bvModal.hide('bv-modal-incluirNota')
+                        // this.fecharModalIncluirNota() 
                     );
              
             }, 
@@ -363,7 +390,7 @@
             abrirModalconfirmarExclusaoNota(nota) {
                 this.notaExcluir = {};                                
                 this.notaExcluir = nota;
-                $('#modalConfirmarExclusaoNota').modal('show')
+                this.$bvModal.show('bv-modal-excluirNota')
             },
 
 
@@ -371,11 +398,6 @@
             confirmarExclusaoNota() {
                 console.log("Nota ecluir d: " + this.notaExcluir.id)
                 this.excluirNota(this.notaExcluir); 
-                /*
-                setTimeout(() => {
-                    $('#modalConfirmarExclusaoNota').modal('hide');                    
-                }, 200);
-                */
             }, 
 
 
@@ -403,7 +425,7 @@
 
                     })
                     .finally(
-                        $('#modalConfirmarExclusaoNota').modal('hide')                        
+                        this.$bvModal.hide('bv-modal-excluirNota')                          
                         );
 
                                     
@@ -497,6 +519,14 @@
     }   
     .btnVisualizarEdoc{
         margin-top: 5rem;
+    }
+
+    .espacoBtn{
+        margin-top: 3rem;
+    }
+
+    .btn-cancelar{
+        margin-left: 2rem;
     }
 
   
