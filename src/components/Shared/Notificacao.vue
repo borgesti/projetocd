@@ -1,66 +1,61 @@
 <template>
     <div>
-        <div v-if="showMSG" :class="'alert alert-dismissible alert-' + (type == 'error' ? 'danger': type)" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
 
-            <div v-html="msgNot"></div>
-        </div>
+        <b-alert
+        :show="dismissCountDown"
+        :dismissible="btnFecharAlert"
+        :variant="tipoAlert"
+       
+        @dismissed="dismissCountDown=0"
+        @dismiss-count-down="countDownChanged"
+        >
+        <p> <strong> {{msgAlert}} </strong> </p>
+        
+        
+        <b-progress
+            :variant="tipoAlert"
+            :max="dismissSecs"
+            :value="dismissCountDown"
+            height="4px"
+        ></b-progress>
+        </b-alert>
+
     </div> 
 </template>
 
 <script>
+
     export default {
         name: "Notificacao",
-        props: {
-            type: {
-                type: String,
-                required: true
-            },
-            msgNot: {
-                type: String,
-                required: false
-            },
-            showMSG: {
-                type: Boolean,
-                required: false
-            },
-            timeOut: {
-                type: Number,
-                required: false,
-                default: 5000
-            }
-        },
-        watch: {
-            showMSG: {
-                immediate: true,
-                handler(value) {
-                    if (value) {
-                        this.showMessage()
-                    }
-                }
-            },
-        },                
+        props: [
+            "tipoAlert",
+            "msgAlert",
+            "mostrarAlert",
+            "btnFecharAlert",
+            "timeOutAlert",
+        ],
+
         data() {
             return {
-                show: false
+            dismissSecs: 5,
+            dismissCountDown: 5,            
             }
         },
-        methods:{
-            showMessage(){
-                this.show = true
-
-                if (this.timeOut > 0) {
-                    setTimeout( () => {
-                        this.show = false
-                    }, this.timeOut);
-                }
-
-                this.$emit('afterDisplay')
-            }
+        methods: {
+            countDownChanged(dismissCountDown) {
+                this.dismissCountDown = dismissCountDown
+              
+            },
+            showAlert() {
+                this.dismissCountDown = this.mostrarAlert
+                this.dismissSecs = this.timeOutAlert
+              
+            },
+          
         },
-    }
+
+      
+    }  
 </script>
 
 <style>

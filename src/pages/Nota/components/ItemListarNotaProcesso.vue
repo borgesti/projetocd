@@ -1,7 +1,7 @@
 <template>
   <tr class="flex-table">
     <td class="flex-row65">{{ nota.desAnotacaoProcesso }}</td>
-    <td class="flex-row15">{{ nota.datInclusaoAnotacaoProcesso }} </td>    
+    <td class="flex-row15">{{ $dateUtils.formatarData(nota.datInclusaoAnotacaoProcesso,'DD/MM/YYYY HH:mm:ss')  }}</td>    
     <td class="flex-row10">{{ nota.desLoginResponsavel }}</td>    
     
     <td class="flex-row05">      

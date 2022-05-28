@@ -11,15 +11,17 @@
 
     <div class="row">
         <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2">
-
-            <Notificacao
-                :type   =  type
-                :msgNot =  msgNot
-                :showMSG=  showMSG
-                :timeOut=  timeOut
-            >
-            </Notificacao>
-            
+            <div v-if=mostrarAlert >
+                <Notificacao
+                    :tipoAlert      = tipoAlert
+                    :msgAlert       = msgAlert
+                    :mostrarAlert   = mostrarAlert      
+                    :btnFecharAlert = btnFecharAlert    
+                    :timeOutAlert   = timeOutAlert
+                >
+                </Notificacao>
+            </div>
+   
             <div class="page-header">
                 <h1>Gerenciar Notas</h1>
             </div>
@@ -47,7 +49,7 @@
                     <h2>Lista de Notas</h2>
                 </div>                    
                 <div class="btnIncluirNota">
-                    <b-button id="show-btn" @click="abrirModalIncluirNota()">Incluir Nota</b-button>              
+                    <b-button id="show-btn" @click="setFocus('#descricaoNota'), abrirModalIncluirNota()">Incluir Nota</b-button>              
                 </div>                
             </div>               
 
@@ -71,7 +73,7 @@
                                 v-for="nota in listaDeNotas"
                                 :key="nota.index"
                                 :nota="nota"
-                                @excluir="abrirModalconfirmarExclusaoNota($event)"
+                                @excluir="abrirModalExcluirNota($event)"
                             >
                             </ItemListarNotaProcesso>    
                         </tbody>
@@ -237,11 +239,11 @@
             return {
                 
                 /*alert*/
-                type: "",
-                msgNot: "",
-                showMSG: "",
-                timeOut: 200,
-
+                msgAlert      : "",
+                tipoAlert     : "",
+                mostrarAlert  : false,
+                btnFecharAlert: false,
+                timeOutAlert  : 0,
 
                 listaDeNotas: [],
                 nota:{},
@@ -281,38 +283,21 @@
             ],
         },
 
-        components: {
-            
-            //PicModal,
-            //PicValidation,
-            //PicAlert,
-            //picActionsbar,
+        components: {        
             //AppLoading,
-            Notificacao,
-            
+            Notificacao,            
             HeaderProcesso,
             ItemListarNotaProcesso,
             Paginacao,
         },
   
         methods: {
-            setFocus(elemId) {
-                setTimeout(() => { document.querySelector(elemId).focus() }, 800);
-            },
 
             inicializar() {
                 this.carregaNotas();          
             },
 
 
-            formatarObjetoData(d) {
-                if (!d) return d
-                let data = new Date(d)
-                if (!data instanceof Date || isNaN(data.valueOf()))
-                    return d
-
-                return data.toLocaleDateString('pt-BR', {timeZone: "America/Sao_Paulo"})
-            },
 
             /* Carregar Notas  */
             carregaNotas() {
@@ -321,11 +306,12 @@
                 notasService
                     .listarNotas(this.itensPorPagina , this.pagina)
                     .then(res => {
-                        if (res.length <= 0) {
-                            this.type   = "warning"
-                            this.msgNot = "Não há nenhuma nota cadastrada para esse processo"
-                            this.showMSG=  true
-                            this.timeOut= 200                            
+                        if (res.length <= 0) {                         
+                            this.tipoAlert      = "warning"
+                            this.msgAlert       = "Não há nenhuma nota cadastrada para esse processo"
+                            this.mostrarAlert   = true
+                            this.btnFecharAlert = false
+                            this.timeOutAlert   = 5                                                            
                         
                         } else {
                             this.listaDeNotas = res.content;
@@ -338,56 +324,59 @@
                         console.log(erro);
                     })
                     .finally(() => {
-                        this.loading = false;
+                        this.loading      = false
                           
                     });
             },       
             
             
-            /* incluir Nota */
+            /* Incluir Nota */
+            abrirModalIncluirNota() {
+                this.nota = {};                    
+                this.$bvModal.show('bv-modal-incluirNota')
+                
+            },
+
             confirmarInclusaoNota() {                
                 this.incluirNota(); 
             }, 
 
-            abrirModalIncluirNota() {
-                this.nota = {};    
-                this.$bvModal.show('bv-modal-incluirNota')
-                
-            },
 
             incluirNota() {
                 notasService
                     .salvarNota(this.nota)
                         
                     .then((res) => {
-                        this.type   = "success"
-                        this.msgNot = "Nota incluída com sucesso"
-                        this.showMSG=  true
-                        this.timeOut= 200
-                        this.carregaNotas()
+                        this.tipoAlert      = "success"
+                        this.msgAlert       = "Nota incluída com sucesso"
+                        this.mostrarAlert   = true
+                        this.btnFecharAlert = false
+                        this.timeOutAlert   = 5
 
+                        this.carregaNotas()
 
                     })
                     .catch(erro => {
-                        this.type   = "error"
-                        this.msgNot = "Não foi possível incluir a Nota"
-                        this.showMSG=  true
-                        this.timeOut= 200
+                        this.tipoAlert      = "error"
+                        this.msgAlert       = "Não foi possível incluir a Nota"
+                        this.mostrarAlert   = true
+                        this.btnFecharAlert = false
+                        this.timeOutAlert   = 5
 
                     })
                     .finally(                         
-                        this.$bvModal.hide('bv-modal-incluirNota')
-                        // this.fecharModalIncluirNota() 
+                        this.$bvModal.hide('bv-modal-incluirNota'),
+                        this.nota={},
+                        this.mostrarAlert   = false
                     );
              
             }, 
+
+
             
-            fecharModalIncluirNota(){
-                $('#modalIncluirNota').modal('hide') 
-                this.nota={}
-            },
             
-            abrirModalconfirmarExclusaoNota(nota) {
+            /* Excluir Nota */
+            abrirModalExcluirNota(nota){
                 this.notaExcluir = {};                                
                 this.notaExcluir = nota;
                 this.$bvModal.show('bv-modal-excluirNota')
@@ -401,31 +390,32 @@
             }, 
 
 
-            /* Excluir Nota */
             excluirNota(nota) {
                 let idNotaExcluir = nota.id
-                /*Chamar o modal para confirmar a exclusão da nota*/
-                //let idNotaExcluir = nota
+
                 console.log("Nota ecluir: " + idNotaExcluir)
                 notasService
                     .excluirNotaService(idNotaExcluir)
                         
                     .then((res) => {
-                        this.type   = "success"
-                        this.msgNot = "Nota excluída com sucesso"
-                        this.showMSG=  true
-                        this.timeOut= 200
+                        this.tipoAlert      = "success"
+                        this.msgAlert       = "Nota excluída com sucesso"
+                        this.mostrarAlert   = true
+                        this.btnFecharAlert = false
+                        this.timeOutAlert   = 5
                         this.carregaNotas();
                     })
                     .catch(erro => {
-                        this.type   = "error"
-                        this.msgNot = "Não foi possível excluir a Nota"
-                        this.showMSG=  true
-                        this.timeOut= 200
+                        this.tipoAlert      = "error"
+                        this.msgAlert       = "Não foi possível excluir a Nota"
+                        this.mostrarAlert   = true
+                        this.btnFecharAlert = false
+                        this.timeOutAlert   = 5                        
 
                     })
                     .finally(
-                        this.$bvModal.hide('bv-modal-excluirNota')                          
+                        this.$bvModal.hide('bv-modal-excluirNota'),
+                        this.mostrarAlert= false                         
                         );
 
                                     
@@ -442,10 +432,11 @@
                         
                     .then((res) => {
                         if (res.length <= 0) {
-                            this.type   = "warning"
-                            this.msgNot = "Não foi possível visualizar nota selecionada"
-                            this.showMSG=  true
-                            this.timeOut= 200
+                            this.tipoAlert      = "warning"
+                            this.msgAlert       = "Não foi possível visualizar nota selecionada"
+                            this.mostrarAlert   = true
+                            this.btnFecharAlert = false
+                            this.timeOutAlert   = 5  
 
                         } else {
                             this.nota = res;
@@ -453,13 +444,16 @@
     
                     })
                     .catch(erro => {
-                        this.type   = "error"
-                        this.msgNot = "Não foi possível visualizar a Nota"
-                        this.showMSG=  true
-                        this.timeOut= 200
+                        this.tipoAlert      = "warning"
+                        this.msgAlert       = "Não foi possível visualizar nota selecionada"
+                        this.mostrarAlert   = true
+                        this.btnFecharAlert = false
+                        this.timeOutAlert   = 5  
 
                     })
-                    .finally();
+                    .finally(
+                        this.mostrarAlert   = false
+                    );
 
                                     
             }, 
@@ -470,10 +464,11 @@
                     .listarNotas(this.itensPorPagina , pagina)
                     .then(res => {
                         if (res.length <= 0) {
-                            this.type   = "warning"
-                            this.msgNot = "Não há nenhuma nota cadastrada para esse processo"
-                            this.showMSG=  true
-                            this.timeOut= 200
+                            this.tipoAlert      = "warning"
+                            this.msgAlert       = "Não há nenhuma nota cadastrada para esse processo"
+                            this.mostrarAlert   = true
+                            this.btnFecharAlert = false
+                            this.timeOutAlert   = 5                             
 
                         } else {
                             this.listaDeNotas = res.content;
@@ -485,10 +480,16 @@
                     .catch(erro => {
                         console.log(erro);
                     })
-                    .finally();
+                    .finally(
+                        this.mostrarAlert   = false
+                    );
 
                 
             },
+
+            setFocus(elemId) {                
+                setTimeout(() => { document.querySelector(elemId).focus() }, 0);
+            },            
 
 
 

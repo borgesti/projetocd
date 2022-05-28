@@ -6,6 +6,9 @@ import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
+import {dateUtils} from '@/utils/dateUtils'
+
+Vue.prototype.$dateUtils               = dateUtils
 
 Vue.use(VueRouter);
 Vue.use(BootstrapVue)
