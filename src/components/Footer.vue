@@ -23,7 +23,7 @@
     name: "Footer_CD",
     data() {
         return {
-        version: "0.0.1-TES" /*process.env.VUE_APP_VERSION*/
+        version: process.env.VUE_APP_VERSION
         };
     }
     };

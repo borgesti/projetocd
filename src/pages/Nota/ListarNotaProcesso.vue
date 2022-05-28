@@ -29,13 +29,14 @@
 
             <div class="panel panel-default">
                 <div class="panel-body">
-                             
+                    
                     <HeaderProcesso 
                         :numeroProcesso = numProcesso
-                        :desTitulo= desTitulo
-                        :desProcedencia= desProcedencia
+                        :desTitulo      = desTitulo
+                        :desProcedencia = desProcedencia
                     >                        
                     </HeaderProcesso>
+                    
                    
                 </div>
             </div> 
@@ -49,7 +50,7 @@
                     <h2>Lista de Notas</h2>
                 </div>                    
                 <div class="btnIncluirNota">
-                    <b-button id="show-btn" @click="setFocus('#descricaoNota'), abrirModalIncluirNota()">Incluir Nota</b-button>              
+                    <b-button id="show-btn" @click="$bvModal.show('bv-modal-incluirNota')">Incluir Nota</b-button>              
                 </div>                
             </div>               
 
@@ -119,21 +120,17 @@
         id="bv-modal-incluirNota" 
         size="lg" 
         hide-footer
+        no-close-on-backdrop
         title="Incluir Nota"
-        @show="resetModal"
-        @hidden="resetModal"
-        @ok="handleOk"
+
     >
         <div class="d-block text-center">
             <h3></h3>
         </div>
 
-        <form ref="form" @submit.stop.prevent="handleSubmit">
+        <form>
             <b-form-group
             label="Nota"
-            label-for="nota-input"
-            invalid-feedback="A nota é de preenchimento obrigatório!"
-            :state="nameState"
             >
                 <b-form-textarea
                 id="descricaoNota"
@@ -142,8 +139,8 @@
                 rows="5"
                 max-rows="10"
                 required
-                :state="nameState"
-                ></b-form-textarea>                             
+                >
+                </b-form-textarea>                             
             </b-form-group>
         </form>
         
@@ -173,6 +170,7 @@
         id="bv-modal-excluirNota" 
         size="sm" 
         hide-footer
+        no-close-on-backdrop
         title="Excluir Nota"
 
     >
@@ -257,8 +255,9 @@
                 datInclusaoAnotacaoProcesso: '',
 
                 numProcesso: "100/2021",
-                desProcedencia: "Maria",
                 desTitulo: "Iluminação",
+                desProcedencia: "Maria",
+                
 
                 parametros: {},
                 itensPorPagina: 10,
@@ -337,7 +336,8 @@
                 
             },
 
-            confirmarInclusaoNota() {                
+            confirmarInclusaoNota() { 
+                console.log(this.nota.desNota)               ;
                 this.incluirNota(); 
             }, 
 

@@ -1,6 +1,11 @@
 {
-  "name": "myapp",
-  "version": "0.1.0",
+  "name": "presidencia-digital-front-end",
+  "description": "Presidência Digital",
+  "version": "0.0.1-TES",
+  "dataUpdate": "25/05/2022",
+  "hourUpdate": "14:30",
+  "author": "Copad - Câmara do Deputados",
+  "main": "src/main.js",
   "private": true,
   "scripts": {
     "dev": "vue-cli-service serve --port 3007 --mode dev",
