@@ -10,6 +10,7 @@
             <span class="nome">Plataforma Digital de trabalho da Presidência</span>
           </a>
           <!-- PONTO DE INSERÇÃO DAS FERRAMENTAS DE SUPORTE GLOBAL -->
+          <!--
           <div class="suporteGlobal">
             <ul class="funcoesGlobais">
               <li>
@@ -42,6 +43,7 @@
               </li>
             </ul>
           </div>
+          -->
         </div>
       </div>
       <div class="seloAmbiente posFinal">Teste</div>

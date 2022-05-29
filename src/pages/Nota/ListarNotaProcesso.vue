@@ -1,10 +1,11 @@
 <template>
 
-  <div class="b-container-fluid">
+  <b-container fluid>
    
 
-    <div class="row">
-        <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2">
+    <b-row>
+        <b-col    col sm="10" offset-sm="1"  md="8"     offset-md="2" col-lg="8" offset-lg="2">
+            <!-- "col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-8   col-lg-offset-2" -->
             <div v-if=mostrarAlert >
                 <Notificacao
                     :tipoAlert      = tipoAlert
@@ -98,8 +99,8 @@
         
          
 
-        </div>    
-    </div>
+        </b-col>    
+   </b-row>
     
 
 
@@ -213,7 +214,7 @@
 
 
 
-  </div>
+  </b-container>
 </template>
 
 

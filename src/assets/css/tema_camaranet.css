@@ -76,7 +76,9 @@ a:active{
 }
 #pic-menu-global .navbar-default{
     background:#33591e;
-    text-transform:none
+    text-transform:none;
+    padding-top:0px;
+    
 }
 .navbar-default .navbar-toggle{
     border-color:#797e77
