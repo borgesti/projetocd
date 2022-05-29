@@ -76,7 +76,7 @@ hr{
     box-sizing:content-box
 }
 pre{
-    overflow:auto
+    overflow:autof
 }
 code,kbd,pre,samp{
     font-family:monospace,monospace;

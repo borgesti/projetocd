@@ -1,6 +1,6 @@
 <template>
 
-  <div class="container-fluid">
+  <div class="b-container-fluid">
    
 
     <div class="row">

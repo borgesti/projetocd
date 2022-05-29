@@ -20,12 +20,12 @@
 
 <script> 
     export default {
-    name: "Footer_CD",
-    data() {
-        return {
-        version: process.env.VUE_APP_VERSION
-        };
-    }
+      name: "Footer",
+      data() {
+          return {
+          version: process.env.VUE_APP_VERSION
+          };
+      }
     };
 </script>
 

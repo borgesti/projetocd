@@ -2,6 +2,7 @@
   <!-- Header -->
   <div id="banner">
     <header>
+
       <div id="cabecalho" class="container-fluid">
         <div class="topoAplicacao">
           <a class="identAplicacao" href="/">
@@ -11,7 +12,7 @@
           <!-- PONTO DE INSERÇÃO DAS FERRAMENTAS DE SUPORTE GLOBAL -->
           <div class="suporteGlobal">
             <ul class="funcoesGlobais">
-              <li  class="menuSuporte menuConfiguracoes">
+              <li>
                 <span class="semLink usuario">
                   <span class="nome">usuario</span>
                   <span class="separador">/</span>
@@ -25,18 +26,18 @@
               <li class="menuSuporte menuConfiguracoes">
                 <a href="#" id="config" >Configurações</a>
               </li>
-              <li class="menuSuporte">
-              </li>
-                <li class="menuSuporte dropdown">
+
+              <li class="menuSuporte dropdown">
                 <a href="#"  id="menuAjuda">Ajuda</a>
                   <div class="dropdown-content">
-    <a href="#">Manual do Sistema</a>
-    <a href="#">Sobre o Sistema</a>
-  </div>
+                    <a href="#">Manual do Sistema</a>
+                    <a href="#">Sobre o Sistema</a>
+                  </div>
               </li>
-               <li class="menuSuporte">
+              
+              <li class="menuSuporte">
               </li>
-                <li class="menuSuporte">
+              <li class="menuSuporte">
                 <a href="#" id="menuTemas">Temas</a>
               </li>
             </ul>
@@ -59,7 +60,7 @@ import MenuGlobal from '@/components/MenuGlobal.vue'
 export default {
   name: 'Header',
    components: {
-   MenuGlobal
+    MenuGlobal
   }
   
 }

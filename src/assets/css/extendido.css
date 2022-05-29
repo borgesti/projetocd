@@ -1,0 +1,74 @@
+    /*###### Início do Rodape ######*/
+
+	.rodape{
+		position:absolute;
+		bottom:0;
+		left: 0;
+		z-index:auto;
+		min-height:32px;
+		box-sizing:border-box;
+		padding:5px;
+		width:100%;
+		overflow:hidden;
+		bottom:0
+	}
+
+	@media(max-width:480px){
+		.rodape .esq .divisor,.rodape .esq .nomeSetor{
+			display:none
+		}
+	}
+
+
+
+	@media(min-width:768px){
+		.rodape{
+			position:fixed;
+			z-index:1000
+		}
+	}
+	.rodape .dir{
+		float:right;
+		font-size:.9em;
+		line-height:2.6em;
+		padding-right:45px;
+		margin-right:10px;
+		text-align:right;
+		background:url(../images/logo_ditec.png) no-repeat center right
+	}
+	.rodape .dir .span{
+		position:absolute;
+		width:1px;
+		height:1px;
+		padding:0;
+		margin:-1px;
+		overflow:hidden;
+		clip:rect(0,0,0,0);
+		border:0
+	}
+
+
+	.rodape{
+		background:#507c3f;
+		background:url(../images/bg_rodape.png) no-repeat 95% center,-moz-linear-gradient(left,#507c3f 55%,#173010 100%);
+		background:url(../images/bg_rodape.png) no-repeat 95% center,-webkit-gradient(linear,left top,right top,color-stop(55%,#507c3f),color-stop(100%,#173010));
+		background:url(../images/bg_rodape.png) no-repeat 95% center,-webkit-linear-gradient(left,#507c3f 55%,#173010 100%);
+		background:url(../images/bg_rodape.png) no-repeat 95% center,-o-linear-gradient(left,#507c3f 55%,#173010 100%);
+		background:url(../images/bg_rodape.png) no-repeat 95% center,-ms-linear-gradient(left,#507c3f 55%,#173010 100%);
+		background:url(../images/bg_rodape.png) no-repeat 95% center,linear-gradient(to right,#507c3f 55%,#173010 100%);
+		filter:progid:DXImageTransform.Microsoft.gradient( startColorstr='#507c3f', endColorstr='#173010', GradientType=1 );
+		color:#fff;
+		border-bottom:3px solid #4f7b3e
+	}
+
+
+	.rodape .esq .versao{
+		color:#a5bb9c;
+		line-height:.8em;
+		font-size:.8em;
+		display:block
+	}
+
+
+    /*###### Fim do Rodape ######*/
+

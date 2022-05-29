@@ -29,3 +29,5 @@ new Vue({
 
 import '@/assets/css/tema_camaranet.css';
 import '@/assets/css/tema_basico.css';
+
+//import '@/assets/css/extendido.css';
